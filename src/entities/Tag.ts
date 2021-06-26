@@ -1,33 +1,18 @@
 import {Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from "typeorm";
 import {v4 as uuid} from "uuid";
-import {Exclude} from "class-transformer";
+import {Expose} from "class-transformer";
 
-@Entity("users")
-class User {
-
-    @Exclude()
+@Entity("tags")
+class Tag {
     @PrimaryColumn()
     readonly id: string;
 
     @Column()
     name: string;
 
-    @Column()
-    email: string;
-
-    @Exclude()
-    @Column()
-    password: string;
-
-    @Exclude()
-    @Column()
-    admin: boolean;
-
-    @Exclude()
     @CreateDateColumn()
     created_at: Date;
 
-    @Exclude()
     @UpdateDateColumn()
     updated_at: Date;
 
@@ -36,8 +21,13 @@ class User {
             this.id = uuid();
         }
     }
+
+    @Expose({name: "nameCustom"})
+    nameCustom(): string {
+        return `#${this.name}`;
+    }
 }
 
 export {
-    User
-};
+    Tag
+}
